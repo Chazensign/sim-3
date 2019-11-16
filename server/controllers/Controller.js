@@ -28,6 +28,12 @@ module.exports = {
       console.log(data)
       res.status(200).send(data)
     })
+  },
+  editPost: (req, res) => {
+    const {content, id, img, profile_pic, title} = req.body
+    const db = req.app.get("db")
+    db.edit_post([content, img, title, id])
+    .then(() )
   }
 
 }

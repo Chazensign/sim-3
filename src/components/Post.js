@@ -29,6 +29,9 @@ class Post extends Component{
   editToggle = () => {
     this.setState({ hidden: !this.state.hidden });
   }
+  updatePost = () => {
+    axios.put('/api/post', this.state.post)
+  }
 
   render() {
     console.log(this.state.post.author_id, this.props.userId);
