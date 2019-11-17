@@ -26,7 +26,7 @@ class Post extends Component {
   }
   handleChange = (trg) => {
 
-    this.setState({ post: {...this.state.post, [trg.name]: trg.value} });
+    this.setState({ post: {...this.state.post, [trg.name]: trg.value} })
   }
 
   updatePost = () => {

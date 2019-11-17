@@ -20,7 +20,6 @@ const Nav = (props) => {
         <img className='profile-pic' src={props.img} alt='' />
       </div>
       <div className='prof-name' >{props.username}</div>
-      {/* <img src={logo} alt='' /> */}
       <Link to='/dashboard'>
         <img className='side-link' src={home} alt='' />
       </Link>

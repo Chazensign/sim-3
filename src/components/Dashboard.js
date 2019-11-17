@@ -5,7 +5,6 @@ import './Dashboard.css'
 import { Link } from 'react-router-dom'
 import search from '../assets/search_logo.png'
 import Nav from './Nav'
-import reducer from '../ducks/reducer'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -36,14 +35,26 @@ class Dashboard extends Component {
     })
   }
   howToFilter = () => {
+    let allArr = []
+    let nonUserArr = []
+    console.log(new Boolean(this.state.search))
+    if (this.state.search) {
+      console.log('running search')
+      allArr = this.state.posts.filter(post =>
+        post.title.includes(this.state.search)
+      ) 
+      nonUserArr = this.state.filteredPosts.filter(post =>
+        post.title.includes(this.state.search)
+      )
+    }
     if (this.state.usersPosts === true) {
-      return this.state.filteredPosts
+      return !this.state.search ? this.state.filteredPosts : allArr
     } else if (this.state.usersPosts === false) {
-      return this.state.posts
+      return !this.state.search ? this.state.posts : nonUserArr
     }
   }
   handlChange = (trg) => {
-
+    this.setState({ [trg.name]: trg.value })
   }
   deletePost = () => {}
 
@@ -54,7 +65,7 @@ class Dashboard extends Component {
         <Nav/>
         <div className='outer-search'>
           <div className='search-cont'>
-            <input onChange={e => this.handlChange(e.target)} placeholder='Search by Title' />
+            <input name='search' onChange={e => this.handlChange(e.target)} value={this.state.search} placeholder='Search by Title' />
             <button className='search'><img src={search} alt='search' /></button>
             <button className='reset' onClick={this.clearSearch}>
               Reset
