@@ -1,4 +1,16 @@
+.login-back {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(90deg, #ff70a6, #ff9770, #ffd670, #e9ff70);
+  
+}
 .App {
+  width: 100vw;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;

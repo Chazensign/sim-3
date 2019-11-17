@@ -8,8 +8,6 @@ module.exports = {
     if (client.length === 0) {
       return res.status(404).send({message: 'Username not found, please register.'})
     } else if (client[0].password !== password) {
-      console.log(client);
-      
       return res.status(403).send({message: 'Incorrect Password'})
     }else if (client[0].password === password) {
     client = client[0]
@@ -39,7 +37,6 @@ module.exports = {
   },
   getSession: (req, res) => {
     if (req.session.user) {
-      console.log(req.session)
       res.status(302).send(req.session.user)
     }
   }

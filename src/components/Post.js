@@ -1,59 +1,86 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import axios from 'axios';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
-class Post extends Component{
+class Post extends Component {
   constructor(props) {
-    super(props);
-    this.state = { 
+    super(props)
+    this.state = {
       post: {},
       hidden: true
-     }
     }
+  }
 
-    componentDidUpdate = () => {
-      console.log('Component Updated')
-    }
-    
-    componentDidMount = () => {
-    axios.get(`/api/post/${this.props.match.params.postid}`)
-    .then(res => {
-      console.log(res.data)
-      this.setState({ post: res.data });
+  componentDidUpdate = () => {
+    console.log('Component Updated')
+  }
 
+  componentDidMount = () => {
+    axios.get(`/api/post/${this.props.match.params.postid}`).then(res => {
+      this.setState({ post: res.data })
     })
-
-    axios.get('/auth/getsession')
-    .then(res => console.log(res))
+    axios.get('/auth/getsession').then(res => console.log(res))
   }
   editToggle = () => {
-    this.setState({ hidden: !this.state.hidden });
+    this.setState({ hidden: false })
   }
+  handleChange = (trg) => {
+
+    this.setState({ post: {...this.state.post, [trg.name]: trg.value} });
+  }
+
   updatePost = () => {
     axios.put('/api/post', this.state.post)
+    .then(() => this.props.history.push('/dashboard'))
   }
 
   render() {
-    console.log(this.state.post.author_id, this.props.userId);
-    const {title, img, content, id, author_id} = this.state.post
-  return ( 
-    <div>
-      <h1>
-      {title}
-      </h1>
-      <input hidden={this.state.hidden} />
-      <img src={img} alt=''/>
-      <p>{content}</p>
-      {+this.state.post.author_id === +this.props.userId ? <button onClick={this.editToggle}>Edit</button> : null }
-    </div>
-   );
+    const { title, img, content, author_id } = this.state.post
+    return (
+      <div>
+        <h1>{title}</h1>
+        <input
+        name='title'
+          type='text'
+          hidden={this.state.hidden}
+          value={title}
+          onChange={e => this.handleChange(e.target)}
+        />
+        <img src={img} alt='' />
+        <input
+        name='img'
+          type='text'
+          hidden={this.state.hidden}
+          value={img}
+          onChange={e => this.handleChange(e.target)}
+        />
+        <p>{content}</p>
+        <input
+        name='content'
+          type='text'
+          hidden={this.state.hidden}
+          value={content}
+          onChange={e => this.handleChange(e.target)}
+        />
+        {author_id === this.props.userId ? (
+          <>
+            <button hidden={!this.state.hidden} onClick={this.editToggle}>
+              Edit
+            </button>
+            <button hidden={this.state.hidden} onClick={() =>this.updatePost()}>
+              Save
+            </button>
+          </>
+        ) : null}
+      </div>
+    )
   }
 }
- function mapStateToProps(state) {
-   const { userId } = state.post;
-   return {
-     userId: userId
-   };
- }
+function mapStateToProps(state) {
+  const { id } = state
+  return {
+    userId: id
+  }
+}
 
- export default connect(mapStateToProps)(Post);
+export default connect(mapStateToProps)(Post)

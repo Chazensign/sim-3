@@ -4,10 +4,8 @@ import axios from 'axios';
 import {connect} from 'react-redux'
 
 const Form = (props) => {
-  console.log(props)
 
   const submitPost = () => {
-    console.log(props.post)
     axios
       .post('/api/post', props.post)
       .then(res => {
