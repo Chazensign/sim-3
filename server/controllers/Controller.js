@@ -11,13 +11,13 @@ module.exports = {
     })
     .catch(err => res.status(417).send({message: 'Something went wrong'}))
   },
+
   allPosts: (req, res) => {
-    
-    
     const db = req.app.get("db")
     db.all_posts()
     .then(result => res.status(200).send(result))
   },
+
   getPost: (req, res) => {
     const db = req.app.get("db")
     db.get_post(req.params.id)
@@ -26,6 +26,7 @@ module.exports = {
       res.status(200).send(data)
     })
   },
+
   editPost: (req, res) => {
     const {content, id, img, title} = req.body
     const db = req.app.get("db")
@@ -33,12 +34,22 @@ module.exports = {
       .then((result) => res.status(200).send({post: result, message: 'Post Updated' }))
       .catch(err => res.status(417).send({err: err, message: 'Something went wrong' }))
   },
+
   getNonUserPosts: (req, res) => {
     const db = req.app.get('db')
     db.get_posts(req.params.id)
     .then(result => {
       res.status(200).send(result)
     })
+  },
+
+  deletePost: (req, res) => {
+    const db = req.app.get('db')
+    db.delete_post(req.params.id)
+    .then(result => {
+      res.status(200).send(result)
+    })
+    .catch(() => res.status(417).send({message: 'Could not delete'}))
   }
 
 }

@@ -1,6 +1,6 @@
 nav {
   height: 100vh;
-  width: 80px;
+  width: 90px;
   background: linear-gradient( #ff9770, #ff70a6);
   position: fixed;
   left: 0;
@@ -19,8 +19,8 @@ nav .profile-img {
   align-items: flex-end;
   justify-content: center;
   box-sizing: border-box;
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   /* height: auto; */
   background: white;
   border-radius: 50%;
@@ -29,10 +29,11 @@ nav .profile-img {
 }
 .prof-name {
   font-size: 16px;
-  padding-bottom: 30px;
+  padding-bottom: 25px;
 }
 .side-link {
-  padding: 10px;
+  /* padding: 10px; */
+  margin: 10px 0 20px 0;
   width: 40px;
 }
 .profile-pic {

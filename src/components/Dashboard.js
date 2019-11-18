@@ -56,7 +56,6 @@ class Dashboard extends Component {
   handlChange = (trg) => {
     this.setState({ [trg.name]: trg.value })
   }
-  deletePost = () => {}
 
   render() {
     console.log(this.state.usersPosts, this.props.userId, this.howToFilter())
@@ -86,11 +85,6 @@ class Dashboard extends Component {
                 to={`/post/${post.id}`}>
                 <div id={post.id} className='post'>
                   <h1>{post.title}</h1>
-                  {this.props.userId === post.author_id ? (
-                    <button onClick={() => this.deletePost(post.id)}>
-                      Delete
-                    </button>
-                  ) : null}
                   <div className='name-pic'>
                     <div>{post.username}</div>
                     <div className='post-pic'>

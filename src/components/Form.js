@@ -2,6 +2,8 @@ import React from 'react';
 import {updatePost} from '../ducks/reducer'
 import axios from 'axios';
 import {connect} from 'react-redux'
+import './Form.css'
+import noImage from '../assets/no_image.jpg'
 
 const Form = (props) => {
 
@@ -16,17 +18,36 @@ const Form = (props) => {
   }
 
   return (
-    <div>
+    <div className='form'>
       <h2>New Post</h2>
-      <form>
-        <input onChange={e => props.updatePost(e.target)} name="title" type="text" />
-        <img name='img-prev'src={props.img} alt=''/>
-        <input value={props.img} onChange={e => props.updatePost(e.target)} name="img" type="text" />
-        <textarea onChange={e => props.updatePost(e.target)} name='content'/>
-        <button onClick={() => submitPost()} >Post</button>
-      </form>
+      <div className='new-post'>
+        <form>
+          <h4>Title:</h4>
+          <input
+            onChange={e => props.updatePost(e.target)}
+            name='title'
+            type='text'
+          />
+          <img
+            className='pic-prev'
+            name='img-prev'
+            src={props.img}
+            alt=''
+          />
+          <h4>Image URL:</h4>
+          <input
+            value={props.img}
+            onChange={e => props.updatePost(e.target)}
+            name='img'
+            type='text'
+          />
+          <h4>Content:</h4>
+          <textarea onChange={e => props.updatePost(e.target)} name='content' />
+          <button onClick={() => submitPost()}>Post</button>
+        </form>
+      </div>
     </div>
-  );
+  )
 }
 
  

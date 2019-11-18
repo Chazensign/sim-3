@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import './Post.css'
 
 class Post extends Component {
   constructor(props) {
@@ -24,14 +25,19 @@ class Post extends Component {
   editToggle = () => {
     this.setState({ hidden: false })
   }
-  handleChange = (trg) => {
-
-    this.setState({ post: {...this.state.post, [trg.name]: trg.value} })
+  handleChange = trg => {
+    this.setState({ post: { ...this.state.post, [trg.name]: trg.value } })
   }
 
   updatePost = () => {
-    axios.put('/api/post', this.state.post)
-    .then(() => this.props.history.push('/dashboard'))
+    axios
+      .put('/api/post', this.state.post)
+      .then(() => this.props.history.push('/dashboard'))
+  }
+  deletePost = () => {
+    axios
+      .delete(`/api/post/${this.props.match.params.postid}`)
+      .then(() => this.props.history.push('/dashboard'))
   }
 
   render() {
@@ -40,15 +46,15 @@ class Post extends Component {
       <div>
         <h1>{title}</h1>
         <input
-        name='title'
+          name='title'
           type='text'
           hidden={this.state.hidden}
           value={title}
           onChange={e => this.handleChange(e.target)}
         />
-        <img src={img} alt='' />
+        <img className='pic' src={img} alt='' />
         <input
-        name='img'
+          name='img'
           type='text'
           hidden={this.state.hidden}
           value={img}
@@ -56,7 +62,7 @@ class Post extends Component {
         />
         <p>{content}</p>
         <input
-        name='content'
+          name='content'
           type='text'
           hidden={this.state.hidden}
           value={content}
@@ -64,10 +70,15 @@ class Post extends Component {
         />
         {author_id === this.props.userId ? (
           <>
+            <button onClick={() => this.deletePost(this.state.post.id)}>
+              Delete
+            </button>
             <button hidden={!this.state.hidden} onClick={this.editToggle}>
               Edit
             </button>
-            <button hidden={this.state.hidden} onClick={() =>this.updatePost()}>
+            <button
+              hidden={this.state.hidden}
+              onClick={() => this.updatePost()}>
               Save
             </button>
           </>

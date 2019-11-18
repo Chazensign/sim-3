@@ -11,7 +11,8 @@ module.exports = {
       return res.status(403).send({message: 'Incorrect Password'})
     }else if (client[0].password === password) {
     client = client[0]
-    req.session.user = client
+    const { username, id, profile_pic} = client
+    req.session.user = { username, id, profile_pic }
     res.status(200).send({message: 'Logged in.', user: req.session.user })
     }
   },
